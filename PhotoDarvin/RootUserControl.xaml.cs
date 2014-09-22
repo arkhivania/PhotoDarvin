@@ -26,9 +26,6 @@ namespace PhotoDarvin
         {
             InitializeComponent();
 
-            foreach (var ve in kernel.GetAll<Photo.Base.ISourceViewExtension>())
-                SourceExtensions.Children.Add(ve.CreateSourceView());
-
             grid_Explorer.Children.Add(kernel.Get<IExplorerViewFactory>().CreateExplorer());
         }
     }

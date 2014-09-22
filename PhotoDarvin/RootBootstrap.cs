@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using Microsoft.Practices.Prism.Modularity;
 using Ninject;
 using System.Windows;
@@ -18,6 +19,13 @@ namespace PhotoDarvin
         public RootBootstrap(Window parentWindow)
         {
             this.parentWindow = parentWindow;
+        }
+
+        protected override Microsoft.Practices.Prism.Regions.RegionAdapterMappings ConfigureRegionAdapterMappings()
+        {
+            var res = base.ConfigureRegionAdapterMappings();
+            res.RegisterMapping(typeof(StackPanel), Kernel.Get<StackPanelRegionAdapter>());
+            return res;
         }
 
         protected override Microsoft.Practices.Prism.Modularity.IModuleCatalog CreateModuleCatalog()

@@ -1,4 +1,6 @@
-﻿using Ninject;
+﻿using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
+using Ninject;
 using Ninject.Modules;
 using System;
 using System.Collections.Generic;
@@ -7,21 +9,20 @@ using System.Text;
 
 namespace Photo.Folder.FolderRetriever.FolderSelector
 {
-    class Module : NinjectModule, Photo.Base.ISourceViewExtension
+    class Module : NinjectModule, IModule
     {
         public override void Load()
         {
             Kernel.Bind<Base.OperatingState>().ToSelf().InSingletonScope();
             Kernel.Bind<ViewModel.SelectorViewModel>().ToSelf().InSingletonScope();
-            Kernel.Bind<Photo.Base.ISourceViewExtension>().ToConstant(this);
             Kernel.Bind<Photo.Base.IPhotoSource>()
                 .ToMethod(w => Kernel.Get<Retriever>())
                 .WhenInjectedInto<ViewModel.SelectorViewModel>();
         }
 
-        public System.Windows.Controls.UserControl CreateSourceView()
+        public void Initialize()
         {
-            return Kernel.Get<Views.SelectorView>();
+            Kernel.Get<IRegionManager>().AddToRegion("TopPanel", Kernel.Get<Views.SelectorView>());
         }
     }
 }

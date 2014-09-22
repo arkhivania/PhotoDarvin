@@ -10,10 +10,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
-            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Name="SourceExtensions" Orientation="Horizontal"/>
+        <StackPanel Name="SourceExtensions" Orientation="Horizontal" cal:RegionManager.RegionName="TopPanel"/>
         <Grid Name="grid_Explorer" Grid.Row="1"/>
         <ContentControl Grid.Row="2" cal:RegionManager.RegionName="BottomTool"/>
     </Grid>

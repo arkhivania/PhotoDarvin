@@ -91,7 +91,11 @@ namespace PhotoDarvin
             {
                 this.Logger.Log("InitializingModules", Category.Debug, Priority.Low);
                 this.InitializeModules();
+                foreach (var m in Kernel.GetModules().OfType<IModule>())
+                    m.Initialize();
             }
+
+            
 
             this.Logger.Log("BootstrapperSequenceCompleted", Category.Debug, Priority.Low);
         }

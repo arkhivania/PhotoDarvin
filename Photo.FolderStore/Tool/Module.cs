@@ -5,20 +5,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
 
 namespace Photo.FolderStore.Tool
 {
-    public class Module : NinjectModule, Photo.Base.ISourceViewExtension
+    public class Module : NinjectModule, IModule
     {
+
         public override void Load()
         {
-            Kernel.Bind<Photo.Base.ISourceViewExtension>().ToConstant(this);
             Kernel.Bind<ViewModel.TargetFolderViewModel>().ToSelf().InSingletonScope();
         }
 
-        public System.Windows.Controls.UserControl CreateSourceView()
+        public void Initialize()
         {
-            return Kernel.Get<View.TargetFolderView>();
+            Kernel.Get<IRegionManager>().AddToRegion("TopPanel", Kernel.Get<View.TargetFolderView>());
         }
     }
 }
