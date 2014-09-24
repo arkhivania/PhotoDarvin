@@ -5,16 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:Photo.FolderStore.Tool.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="300">
+             d:DesignHeight="60" d:DesignWidth="300">
     <GroupBox Header="Export">
     <Grid Name="layoutRoot" d:DataContext="{d:DesignInstance Type=vm:TargetFolderViewModel}" Margin="4">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        
-        <Button Command="{Binding SelectTargetFolderCommand}" Content="Select folder" Margin="4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <Button Grid.Column="1" Command="{Binding PutToFolderCommand}" Content="PUT" Margin="4"/>
+        <Button Grid.Column="0" Command="{Binding SelectTargetFolderCommand}" Content="Select target folder" Margin="4"/>
+        <Button Grid.Column="1" Command="{Binding PutToFolderCommand}" Content="PUT" Margin="0" MinWidth="180"/>
     </Grid>
     </GroupBox>
 </UserControl>

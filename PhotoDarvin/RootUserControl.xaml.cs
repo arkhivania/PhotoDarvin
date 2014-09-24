@@ -25,8 +25,6 @@ namespace PhotoDarvin
         public RootUserControl(IKernel kernel)
         {
             InitializeComponent();
-
-            grid_Explorer.Children.Add(kernel.Get<IExplorerViewFactory>().CreateExplorer());
         }
     }
 }

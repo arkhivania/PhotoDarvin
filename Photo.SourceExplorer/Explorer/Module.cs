@@ -1,4 +1,6 @@
-﻿using Ninject;
+﻿using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
+using Ninject;
 using Ninject.Modules;
 using System;
 using System.Collections.Generic;
@@ -8,19 +10,17 @@ using System.Threading.Tasks;
 
 namespace Photo.SourceExplorer.Explorer
 {
-    public class Module : NinjectModule, Base.IExplorerViewFactory
+    public class Module : NinjectModule, IModule
     {
         public override void Load()
         {
             Kernel.Bind<Base.OperatingState>().ToSelf().InSingletonScope();
             Kernel.Bind<ViewModel.ExplorerViewModel>().ToSelf().InSingletonScope();
-            
-            Kernel.Bind<Base.IExplorerViewFactory>().ToConstant(this);
-        }
+        }        
 
-        public System.Windows.Controls.UserControl CreateExplorer()
+        public void Initialize()
         {
-            return Kernel.Get<View.ExplorerView>();
+            Kernel.Get<IRegionManager>().AddToRegion("SourceExplorer", Kernel.Get<View.ExplorerView>());
         }
     }
 }

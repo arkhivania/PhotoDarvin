@@ -13,8 +13,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Name="SourceExtensions" Orientation="Horizontal" cal:RegionManager.RegionName="TopPanel"/>
-        <Grid Name="grid_Explorer" Grid.Row="1"/>
+        <StackPanel Name="SourceExtensions" Orientation="Horizontal" cal:RegionManager.RegionName="TopPanel" Background="Gray"/>
+        <ContentControl Grid.Row="1" cal:RegionManager.RegionName="SourceExplorer" Background="Black"/>
         <ContentControl Grid.Row="2" cal:RegionManager.RegionName="BottomTool"/>
     </Grid>
 </UserControl>

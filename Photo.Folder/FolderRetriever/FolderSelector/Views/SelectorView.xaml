@@ -5,12 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:Photo.Folder.FolderRetriever.FolderSelector.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="300">
-    <Grid d:DataContext="{d:DesignInstance Type=vm:SelectorViewModel}" Name="layoutRoot">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <Button Command="{Binding SelectFolderCommand}" Content="Select" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center" Margin="4"/>
-    </Grid>
+             d:DesignHeight="60" d:DesignWidth="300">
+    <GroupBox Header="Import">
+        <Grid d:DataContext="{d:DesignInstance Type=vm:SelectorViewModel}" Name="layoutRoot">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Command="{Binding SelectFolderCommand}" Content="Select source folder" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center" Margin="4"/>
+        </Grid>
+    </GroupBox>
 </UserControl>

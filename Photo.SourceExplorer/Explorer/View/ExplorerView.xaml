@@ -6,7 +6,7 @@
              xmlns:vm="clr-namespace:Photo.SourceExplorer.Explorer.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Name="layoutRoot" d:DataContext="{d:DesignInstance Type=vm:ExplorerViewModel}">
+    <Grid Name="layoutRoot" d:DataContext="{d:DesignInstance Type=vm:ExplorerViewModel}" Background="Black">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="2*"/>

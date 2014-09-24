@@ -65,6 +65,7 @@
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -89,7 +90,6 @@
       <DependentUpon>RootUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="StackPanelRegionAdapter.cs" />
-    <Compile Include="Tool\SampleToolModule.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

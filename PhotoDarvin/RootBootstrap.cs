@@ -31,7 +31,7 @@ namespace PhotoDarvin
         protected override Microsoft.Practices.Prism.Modularity.IModuleCatalog CreateModuleCatalog()
         {
             var catalog = new ModuleCatalog();
-            catalog.AddModule(typeof(Tool.SampleToolModule));
+            
             return catalog;
         }
 
