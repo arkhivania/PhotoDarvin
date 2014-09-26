@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace Photo.FolderStore.Tool.ViewModel
 {
@@ -51,8 +52,30 @@ namespace Photo.FolderStore.Tool.ViewModel
  
         private void PutToFolder()
         {
-            var targetFileName = Path.Combine(targetFolder, Path.GetFileName(explorerOperatingState.SelectedPhoto.FilePath));
+            var target = Path.Combine(targetFolder, Path.GetFileName(explorerOperatingState.SelectedPhoto.FilePath));
+            var targetFileName = target;
+            
+            int index = 1;
+            while (File.Exists(targetFileName) && !TheSame(explorerOperatingState.SelectedPhoto.FilePath, targetFileName))
+                targetFileName = CorrectTarget(target, index++);
             File.Copy(explorerOperatingState.SelectedPhoto.FilePath, targetFileName, true);
+            Console.Beep(400, 100);
+        }
+
+        private bool TheSame(string path1, string path2)
+        {
+            var md5 = MD5.Create();
+            using (var fs1 = new FileStream(path1, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var fs2 = new FileStream(path1, FileMode.Open, FileAccess.Read, FileShare.Read))
+                return md5.ComputeHash(fs1).SequenceEqual(md5.ComputeHash(fs2));
+        }
+
+        private string CorrectTarget(string filePath, int index)
+        {
+            var dirName = Path.GetDirectoryName(filePath);
+            var fileWOExt = Path.GetFileNameWithoutExtension(filePath);
+            var ext = Path.GetExtension(filePath);
+            return Path.Combine(dirName, string.Format("{0}({1}){2}", fileWOExt, index, ext));
         }
 
         void SelectTargetCommand()
