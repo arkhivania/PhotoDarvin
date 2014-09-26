@@ -13,8 +13,12 @@
         </Grid.ColumnDefinitions>
         
         <ListBox ItemsSource="{Binding OperatingState.ExplorePhotos}" 
-                 SelectedItem="{Binding OperatingState.SelectedPhoto, Mode=TwoWay}" DisplayMemberPath="FileTime" Margin="0,0,4,0"/>
+                 SelectedItem="{Binding OperatingState.SelectedPhoto, Mode=TwoWay}" DisplayMemberPath="PhotoTime" Margin="0,0,4,0"/>
         <GridSplitter VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="4" Background="Gray"/>
-        <Image Source="{Binding SelectedImage}" Grid.Column="1"/>
+        <Image Source="{Binding DisplayImage.Image }" Grid.Column="1" RenderOptions.BitmapScalingMode="Fant">
+            <Image.LayoutTransform>
+                <RotateTransform Angle="{Binding DisplayImage.Angle}"/>
+            </Image.LayoutTransform>
+        </Image>
     </Grid>
 </UserControl>

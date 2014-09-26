@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Photo.Base;
 using System.Windows.Media;
+using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace Photo.SourceExplorer.Explorer.ViewModel
 {
@@ -14,20 +16,21 @@ namespace Photo.SourceExplorer.Explorer.ViewModel
         private readonly IEventAggregator eventAggregator;
         private readonly Base.OperatingState operatingState;
 
-        ImageSource selectedImage;
 
-        public ImageSource SelectedImage
+        DisplayImage displayImage;
+        public DisplayImage DisplayImage
         {
-            get { return selectedImage; }
-            private set 
+            get { return displayImage; }
+            set 
             {
-                selectedImage = value;
-                if (SelectedImageChanged != null)
-                    SelectedImageChanged(this, EventArgs.Empty);
+                displayImage = value;
+                if (DisplayImageChanged != null)
+                    DisplayImageChanged(this, EventArgs.Empty);
             }
         }
 
-        public event EventHandler SelectedImageChanged;
+        public event EventHandler DisplayImageChanged;
+        
 
         public Base.OperatingState OperatingState
         {
@@ -49,9 +52,44 @@ namespace Photo.SourceExplorer.Explorer.ViewModel
 
         void operatingState_SelectedPhotoChanged(object sender, EventArgs e)
         {
-            SelectedImage = null;
+            DisplayImage = null;
             if (operatingState.SelectedPhoto != null)
-                SelectedImage = new System.Windows.Media.Imaging.BitmapImage(new Uri(operatingState.SelectedPhoto.FilePath));
+                DisplayImage = new DisplayImage 
+                {
+                    Image = new System.Windows.Media.Imaging.BitmapImage(new Uri(operatingState.SelectedPhoto.FilePath)),
+                    Angle = DefineAngle(operatingState.SelectedPhoto.FilePath)
+                };
+        }
+
+        private double DefineAngle(string path)
+        {
+            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                var bitmapFrame = BitmapFrame.Create(fileStream, BitmapCreateOptions.DelayCreation, BitmapCacheOption.None);
+                BitmapMetadata bitmapMetadata = bitmapFrame.Metadata as BitmapMetadata;
+
+                const string _orientationQuery = "System.Photo.Orientation";
+                if ((bitmapMetadata != null) && (bitmapMetadata.ContainsQuery(_orientationQuery)))
+                {
+                    object o = bitmapMetadata.GetQuery(_orientationQuery);
+
+                    if (o != null)
+                    {
+                        //refer to http://www.impulseadventure.com/photo/exif-orientation.html for details on orientation values
+                        switch ((ushort)o)
+                        {
+                            case 6:
+                                return 90D;
+                            case 3:
+                                return 180D;
+                            case 8:
+                                return 270D;                            
+                        }
+                    }
+                }
+            }
+
+            return 0;
         }
 
         private void UpdateBy(IPhotoSource ps)

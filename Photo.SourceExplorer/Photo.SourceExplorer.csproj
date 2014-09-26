@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Base\OperatingState.cs" />
     <Compile Include="Explorer\Module.cs" />
+    <Compile Include="Explorer\ViewModel\DisplayImage.cs" />
     <Compile Include="Explorer\ViewModel\ExplorerViewModel.cs" />
     <Compile Include="Explorer\View\ExplorerView.xaml.cs">
       <DependentUpon>ExplorerView.xaml</DependentUpon>
