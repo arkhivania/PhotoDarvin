@@ -41,6 +41,8 @@ namespace PhotoDarvin
 
             Kernel.Load<Photo.Folder.FolderRetriever.Module>();
             Kernel.Load<Photo.SourceExplorer.Explorer.Module>();
+            Kernel.Load<Photo.SourceExplorer.PhotosList.Module>();
+
             Kernel.Load<Photo.FolderStore.Tool.Module>();
 
             Kernel.Bind<OSWrap.IDialogs>().ToMethod(w => new OSWrap.Windows.Dialogs(parentWindow));

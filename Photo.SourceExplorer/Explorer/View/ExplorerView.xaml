@@ -7,15 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Name="layoutRoot" d:DataContext="{d:DesignInstance Type=vm:ExplorerViewModel}" Background="Black">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="4*"/>
-        </Grid.ColumnDefinitions>
-        
-        <ListBox ItemsSource="{Binding OperatingState.ExplorePhotos}" 
-                 SelectedItem="{Binding OperatingState.SelectedPhoto, Mode=TwoWay}" DisplayMemberPath="PhotoTime" Margin="0,0,4,0"/>
-        <GridSplitter VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="4" Background="Gray"/>
-        <Image Source="{Binding DisplayImage.Image }" Grid.Column="1" RenderOptions.BitmapScalingMode="Fant">
+        <Image Source="{Binding DisplayImage.Image }" RenderOptions.BitmapScalingMode="Fant">
             <Image.LayoutTransform>
                 <RotateTransform Angle="{Binding DisplayImage.Angle}"/>
             </Image.LayoutTransform>

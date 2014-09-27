@@ -14,7 +14,14 @@
         </Grid.RowDefinitions>
 
         <StackPanel Name="SourceExtensions" Orientation="Horizontal" cal:RegionManager.RegionName="TopPanel" Background="Gray"/>
-        <ContentControl Grid.Row="1" cal:RegionManager.RegionName="SourceExplorer" Background="Black"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="60"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ContentControl cal:RegionManager.RegionName="PhotosList"/>
+            <ContentControl cal:RegionManager.RegionName="SourceExplorer" Grid.Column="1"/>
+        </Grid>
         <ContentControl Grid.Row="2" cal:RegionManager.RegionName="BottomTool"/>
     </Grid>
 </UserControl>
