@@ -56,8 +56,16 @@ namespace Photo.FolderStore.Tool.ViewModel
             var targetFileName = target;
             
             int index = 1;
-            while (File.Exists(targetFileName) && !TheSame(explorerOperatingState.SelectedPhoto.FilePath, targetFileName))
+            while (File.Exists(targetFileName))
+            {
+                if (TheSame(explorerOperatingState.SelectedPhoto.FilePath, targetFileName))
+                {
+                    Console.Beep(600, 100);
+                    return;
+                }
+
                 targetFileName = CorrectTarget(target, index++);
+            }
             File.Copy(explorerOperatingState.SelectedPhoto.FilePath, targetFileName, true);
             Console.Beep(400, 100);
         }
@@ -66,7 +74,7 @@ namespace Photo.FolderStore.Tool.ViewModel
         {
             var md5 = MD5.Create();
             using (var fs1 = new FileStream(path1, FileMode.Open, FileAccess.Read, FileShare.Read))
-            using (var fs2 = new FileStream(path1, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var fs2 = new FileStream(path2, FileMode.Open, FileAccess.Read, FileShare.Read))
                 return md5.ComputeHash(fs1).SequenceEqual(md5.ComputeHash(fs2));
         }
 

@@ -4,14 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Microsoft.Practices.Prism.Modularity;
 using Ninject;
 using System.Windows;
+using OSWrap;
+using OSWrap.Windows;
 
 namespace PhotoDarvin
 {
     class RootBootstrap : NinjectBootstrapper
     {
+        
+
         private readonly Window parentWindow;
 
         public DependencyObject OpenedShell { get { return Shell; } }
@@ -38,6 +43,7 @@ namespace PhotoDarvin
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
+            Kernel.Bind<ICommandRegistry>().ToMethod( w => new CommandRegistry(parentWindow)).InSingletonScope();
 
             Kernel.Load<Photo.Folder.FolderRetriever.Module>();
             Kernel.Load<Photo.SourceExplorer.Explorer.Module>();
