@@ -14,6 +14,6 @@ namespace Photo.Print.Layout.Base
         public float Width { get; set; }
         public float Height { get; set; }
 
-        public Photo? Photo { get; set; }
+        public Photo? Photo { get; set; }        
     }
 }
