@@ -22,9 +22,8 @@ namespace Photo.SourceExplorer.Base
 
         public event EventHandler ExplorePhotosChanged;
 
-        private Photo.Base.Photo selectedPhoto;
-
-        public Photo.Base.Photo SelectedPhoto
+        private Photo.Base.Photo? selectedPhoto;
+        public Photo.Base.Photo? SelectedPhoto
         {
             get { return selectedPhoto; }
             set 
