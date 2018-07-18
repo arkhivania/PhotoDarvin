@@ -31,16 +31,16 @@ namespace Photo.Print.LayoutPrint.Tests
                     {
                         new Area
                         {
-                            Width = 0.5f, Height = 1.0f,
+                            Width = 1f, Height = 0.5f,
                             Left = 0, Top = 0,
-                            Photo = new Layout.Base.Photo { FileName = @".\Photo.Print\image_1.jpg" }
+                            Photo = new Layout.Base.Photo { FileName = @"C:\temp\Print\DSC_0313.JPG" }
                         },
 
                         new Area
                         {
-                            Width = 0.5f, Height = 1.0f,
-                            Left = 0.5f, Top = 0,
-                            Photo = new Layout.Base.Photo { FileName = @".\Photo.Print\image_2.jpg" }
+                            Width = 1f, Height = 0.5f,
+                            Left = 0f, Top = 0.5f,
+                            Photo = new Layout.Base.Photo { FileName = @"C:\temp\Print\DSC_0319.JPG" }
                         },
                     };
 
