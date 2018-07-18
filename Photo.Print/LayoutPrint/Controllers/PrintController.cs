@@ -67,8 +67,8 @@ namespace Photo.Print.LayoutPrint.Controllers
                     var tc_x = l + tw / 2;
                     var tc_y = t + th / 2;
 
-                    var sw = (float)pi.Image.Width;
-                    var sh = (float)pi.Image.Height;
+                    var sw = 100f * (float)pi.Image.Width / (pi.Image.HorizontalResolution);
+                    var sh = 100f * (float)pi.Image.Height / (pi.Image.VerticalResolution);
 
                     var scale_x = tw/sw;
                     var scale_y = th/sh;
@@ -76,7 +76,7 @@ namespace Photo.Print.LayoutPrint.Controllers
                     var scale = System.Math.Max(scale_x, scale_y);
                     using (var m2d = new Matrix())
                     {
-                        m2d.Translate(-sw / 2, -sh / 2, MatrixOrder.Append);
+                        m2d.Translate(-sw / 2f, -sh / 2f, MatrixOrder.Append);
                         m2d.Scale(scale, scale, MatrixOrder.Append);
                         m2d.Translate(tc_x, tc_y, MatrixOrder.Append);
 
@@ -87,6 +87,7 @@ namespace Photo.Print.LayoutPrint.Controllers
                             var cont = e.Graphics.BeginContainer();
                             e.Graphics.Transform = m2d;
                             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+                            e.Graphics.InterpolationMode = InterpolationMode.High;
 
                             var targClipPoints = new[] { new PointF(l, t), new PointF(l + tw, t), new PointF(l + tw, t + th), new PointF(l, t + th) };
 
@@ -96,9 +97,10 @@ namespace Photo.Print.LayoutPrint.Controllers
                                 gp.AddPolygon(targClipPoints);
                                 e.Graphics.SetClip(gp);
                                 e.Graphics.DrawImage(pi.Image, 0, 0);
-                                e.Graphics.ResetClip();
-                                e.Graphics.EndContainer(cont);
+                                e.Graphics.ResetClip();                                
                             }
+
+                            e.Graphics.EndContainer(cont);
                         }
                     }
                 }
@@ -114,18 +116,18 @@ namespace Photo.Print.LayoutPrint.Controllers
                 using (var pd = new PrintDialog() { UseEXDialog = true })
                 {
                     pd.Document = print;
-                    if (pd.ShowDialog() == DialogResult.OK)
+                    if (pd.ShowDialog(parentWindow) == DialogResult.OK)
                     {
                         using (PageSetupDialog psd = new PageSetupDialog())
                         {
                             psd.Document = print;
                             SetupPageSettings(psd.PageSettings);
-                            if (psd.ShowDialog() == DialogResult.OK)
+                            if (psd.ShowDialog(parentWindow) == DialogResult.OK)
                             {
                                 using (PrintPreviewDialog prev = new PrintPreviewDialog())
                                 {
                                     prev.Document = print;
-                                    prev.ShowDialog();
+                                    prev.ShowDialog(parentWindow);
                                 }
                             }
                         }
