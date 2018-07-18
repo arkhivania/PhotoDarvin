@@ -95,8 +95,6 @@ namespace PhotoDarvin
                     m.Initialize();
             }
 
-            
-
             this.Logger.Log("BootstrapperSequenceCompleted", Category.Debug, Priority.Low);
         }
 

@@ -31,16 +31,20 @@ namespace Photo.Print.LayoutPrint.Tests
                     {
                         new Area
                         {
-                            Width = 1f, Height = 0.5f,
+                            Width = 0.5f, Height = 1,
                             Left = 0, Top = 0,
-                            Photo = new Layout.Base.Photo { FileName = @"C:\temp\Print\DSC_0313.JPG" }
+                            Photo = new Layout.Base.Photo { FileName = @"C:\temp\Print\DSC_0333.JPG" },
+                            Angle = -90,
+                            FitType = FitType.Crop
                         },
 
                         new Area
                         {
-                            Width = 1f, Height = 0.5f,
-                            Left = 0f, Top = 0.5f,
-                            Photo = new Layout.Base.Photo { FileName = @"C:\temp\Print\DSC_0319.JPG" }
+                            Width = 0.5f, Height = 1f,
+                            Left = 0.5f, Top = 0,
+                            Photo = new Layout.Base.Photo { FileName = @"C:\temp\Print\DSC_0344.JPG" },
+                            Angle = -90,
+                            FitType = FitType.Crop
                         },
                     };
 

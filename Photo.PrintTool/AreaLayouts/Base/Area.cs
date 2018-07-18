@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Photo.Print.Layout.Base
+namespace Photo.PrintTool.AreaLayouts.Base
 {
     public struct Area
     {
@@ -14,8 +14,6 @@ namespace Photo.Print.Layout.Base
         public float Width { get; set; }
         public float Height { get; set; }
 
-        public Photo? Photo { get; set; }
-        public int Angle { get; set; }
-        public FitType FitType { get; set; }
+        public string Id { get; set; }
     }
 }

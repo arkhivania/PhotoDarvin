@@ -56,7 +56,7 @@ namespace Photo.SourceExplorer.Explorer.ViewModel
             if (operatingState.SelectedPhoto != null)
                 DisplayImage = new DisplayImage 
                 {
-                    Image = new System.Windows.Media.Imaging.BitmapImage(new Uri(operatingState.SelectedPhoto.Value.FilePath)),
+                    Image = new BitmapImage(new Uri(operatingState.SelectedPhoto.Value.FilePath)),
                     Angle = DefineAngle(operatingState.SelectedPhoto.Value.FilePath)
                 };
         }

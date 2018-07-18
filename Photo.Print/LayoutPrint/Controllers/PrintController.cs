@@ -53,9 +53,6 @@ namespace Photo.Print.LayoutPrint.Controllers
 
             protected override void OnPrintPage(PrintPageEventArgs e)
             {
-                e.Graphics.FillRectangle(Brushes.Yellow, e.MarginBounds);
-                e.Graphics.FillRectangle(Brushes.Red, new RectangleF(e.MarginBounds.Left, e.MarginBounds.Top, e.MarginBounds.Width / 2, e.MarginBounds.Height));
-
                 foreach (var pi in printItems)
                 {
                     var l = e.MarginBounds.Left + (pi.Area.Left) * e.MarginBounds.Width;                    
@@ -67,16 +64,36 @@ namespace Photo.Print.LayoutPrint.Controllers
                     var tc_x = l + tw / 2;
                     var tc_y = t + th / 2;
 
-                    var sw = 100f * (float)pi.Image.Width / (pi.Image.HorizontalResolution);
-                    var sh = 100f * (float)pi.Image.Height / (pi.Image.VerticalResolution);
+                    var sw_source = 100f * (float)pi.Image.Width / (pi.Image.HorizontalResolution);
+                    var sh_source = 100f * (float)pi.Image.Height / (pi.Image.VerticalResolution);
+                    var dm = new Matrix();
+                    dm.Rotate(pi.Area.Angle);
+                    var corners = new[] { new PointF(0, 0), new PointF(sw_source, 0), new PointF(sw_source, sh_source), new PointF(0, sh_source) };
+                    dm.TransformPoints(corners);
+                    var sx_max = corners.Select(q => q.X).Max();
+                    var sx_min = corners.Select(q => q.X).Min();
 
-                    var scale_x = tw/sw;
-                    var scale_y = th/sh;
+                    var sy_max = corners.Select(q => q.Y).Max();
+                    var sy_min = corners.Select(q => q.Y).Min();
 
-                    var scale = System.Math.Max(scale_x, scale_y);
+                    var scale_x = tw/(sx_max - sx_min);
+                    var scale_y = th/(sy_max - sy_min);
+
+                    float scale = 1;
+                    switch(pi.Area.FitType)
+                    {
+                        case FitType.Fit:
+                            scale = System.Math.Min(scale_x, scale_y);
+                            break;
+                        case FitType.Crop:
+                            scale = System.Math.Max(scale_x, scale_y);
+                            break;
+                    }
+
                     using (var m2d = new Matrix())
                     {
-                        m2d.Translate(-sw / 2f, -sh / 2f, MatrixOrder.Append);
+                        m2d.Translate(-sw_source / 2f, -sh_source / 2f, MatrixOrder.Append);
+                        m2d.Rotate(pi.Area.Angle, MatrixOrder.Append);
                         m2d.Scale(scale, scale, MatrixOrder.Append);
                         m2d.Translate(tc_x, tc_y, MatrixOrder.Append);
 
@@ -87,7 +104,7 @@ namespace Photo.Print.LayoutPrint.Controllers
                             var cont = e.Graphics.BeginContainer();
                             e.Graphics.Transform = m2d;
                             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-                            e.Graphics.InterpolationMode = InterpolationMode.High;
+                            e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
                             var targClipPoints = new[] { new PointF(l, t), new PointF(l + tw, t), new PointF(l + tw, t + th), new PointF(l, t + th) };
 
@@ -148,7 +165,5 @@ namespace Photo.Print.LayoutPrint.Controllers
         {
             SetupPageSettings(e.PageSettings);
         }
-
-        
     }
 }
