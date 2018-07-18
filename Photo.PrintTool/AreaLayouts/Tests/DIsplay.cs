@@ -23,6 +23,7 @@ namespace Photo.PrintTool.AreaLayouts.Tests
             using (var kernel = new StandardKernel(new NinjectSettings { LoadExtensions = false }))
             {
                 kernel.Load<AreaLayouts.Module>();
+                kernel.Load<PhotoItemTools.Module>();
                 kernel.Load<PhotoLayout.Module>();
 
                 var areas = kernel.Get<Base.IAreaLayouts>();

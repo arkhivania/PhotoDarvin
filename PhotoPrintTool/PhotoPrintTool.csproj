@@ -34,8 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -84,6 +88,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -91,6 +96,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nailhang.Core\Nailhang.Core.csproj">
+      <Project>{161c5ada-3ac9-4bf0-b366-7c2b80514b6c}</Project>
+      <Name>Nailhang.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nailhang.MVVM\Nailhang.MVVM.csproj">
+      <Project>{11e30059-fe60-4fe4-a9f6-a00a2d6efee9}</Project>
+      <Name>Nailhang.MVVM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Photo.PrintTool\Photo.PrintTool.csproj">
+      <Project>{225928c4-527e-4d47-997d-0780ed9656d7}</Project>
+      <Name>Photo.PrintTool</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Photo.Print\Photo.Print.csproj">
+      <Project>{a9dfcd45-03d7-48fb-a49d-3f576fbe9096}</Project>
+      <Name>Photo.Print</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

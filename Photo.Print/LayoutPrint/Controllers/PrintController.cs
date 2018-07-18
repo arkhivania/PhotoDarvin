@@ -79,7 +79,7 @@ namespace Photo.Print.LayoutPrint.Controllers
                     var scale_x = tw/(sx_max - sx_min);
                     var scale_y = th/(sy_max - sy_min);
 
-                    float scale = 1;
+                    double scale = 1;
                     switch(pi.Area.FitType)
                     {
                         case FitType.Fit:
@@ -94,8 +94,8 @@ namespace Photo.Print.LayoutPrint.Controllers
                     {
                         m2d.Translate(-sw_source / 2f, -sh_source / 2f, MatrixOrder.Append);
                         m2d.Rotate(pi.Area.Angle, MatrixOrder.Append);
-                        m2d.Scale(scale, scale, MatrixOrder.Append);
-                        m2d.Translate(tc_x, tc_y, MatrixOrder.Append);
+                        m2d.Scale((float)scale, (float)scale, MatrixOrder.Append);
+                        m2d.Translate((float)tc_x, (float)tc_y, MatrixOrder.Append);
 
                         using (var invert = m2d.Clone())
                         {
@@ -106,7 +106,7 @@ namespace Photo.Print.LayoutPrint.Controllers
                             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
                             e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
-                            var targClipPoints = new[] { new PointF(l, t), new PointF(l + tw, t), new PointF(l + tw, t + th), new PointF(l, t + th) };
+                            var targClipPoints = new[] { new PointF((float)l, (float)t), new PointF((float)l + (float)tw, (float)t), new PointF((float)l + (float)tw, (float)t + (float)th), new PointF((float)l, (float)t + (float)th) };
 
                             invert.TransformPoints(targClipPoints);
                             using (var gp = new GraphicsPath())

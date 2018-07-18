@@ -8,11 +8,11 @@ namespace Photo.PrintTool.AreaLayouts.Base
 {
     public struct Area
     {
-        public float Left { get; set; }
-        public float Top { get; set; }
+        public double Left { get; set; }
+        public double Top { get; set; }
 
-        public float Width { get; set; }
-        public float Height { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
 
         public string Id { get; set; }
     }

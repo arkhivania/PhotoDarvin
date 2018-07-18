@@ -74,6 +74,7 @@ namespace Photo.PrintTool.AreaLayouts.Views
 
         private void LayoutView_Unloaded(object sender, RoutedEventArgs e)
         {
+            areaLayouts.LayoutState.ValueChanged -= LayoutState_ValueChanged;
             disposables.Dispose();
         }
 
@@ -84,6 +85,12 @@ namespace Photo.PrintTool.AreaLayouts.Views
             if (disposables.Count > 0)
                 return;
 
+            areaLayouts.LayoutState.ValueChanged += LayoutState_ValueChanged;
+            RebuildLayout();
+        }
+
+        private void LayoutState_ValueChanged(object sender, EventArgs e)
+        {
             RebuildLayout();
         }
 

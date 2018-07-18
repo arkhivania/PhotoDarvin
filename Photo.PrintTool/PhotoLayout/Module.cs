@@ -17,10 +17,8 @@ namespace Photo.PrintTool.PhotoLayout
         public IEnumerable<IDisposable> ArrangeArea(Grid grid, Area area)
         {
             var item = Kernel.Get<ViewItems.PhotoViewItem>(new ConstructorArgument("area", area));
-            item.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
-            item.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             grid.Children.Add(item);
-            yield return new ActionThroughDispose(() => grid.Children.Add(item));
+            yield return new ActionThroughDispose(() => grid.Children.Remove(item));
             yield return item;
         }
 

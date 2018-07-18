@@ -1,4 +1,5 @@
-﻿using Photo.Print.Layout.Base;
+﻿using Nailhang.Core;
+using Photo.Print.Layout.Base;
 using Photo.PrintTool.AreaLayouts.Base;
 using Photo.PrintTool.PhotoLayout.Base;
 using System;
@@ -16,26 +17,62 @@ using Area = Photo.PrintTool.AreaLayouts.Base.Area;
 
 namespace Photo.PrintTool.PhotoLayout.ViewItems
 {
-    class PhotoViewItem : Canvas, IDisposable
+    class PhotoViewItem : Grid, IDisposable
     {
         private readonly IPhotoBag photoBag;
         private readonly Area area;
-
-        PhotoItem photoItem;
+        private readonly IPhotoItemArrange[] photoItemArranges;
+        PhotoItem photoItem = new PhotoItem();
 
         readonly Image displayImage = new Image();
+        readonly Canvas canvas = new Canvas() { VerticalAlignment = VerticalAlignment.Stretch, HorizontalAlignment = HorizontalAlignment.Stretch };
 
-        public PhotoViewItem(IPhotoBag photoBag, Area area)
+        public PhotoViewItem(IPhotoBag photoBag, Area area, Base.IPhotoItemArrange[] photoItemArranges)
         {
             this.photoBag = photoBag;
             this.area = area;
+            this.photoItemArranges = photoItemArranges;
+            Background = Brushes.Transparent;
             this.ClipToBounds = true;
 
-            Children.Add(displayImage);
+            canvas.Children.Add(displayImage);
+            Children.Add(canvas);
 
             SetupPhotoItem(photoBag.Items.FirstOrDefault(q => q.AreaID == area.Id));
             photoBag.Items.CollectionChanged += Items_CollectionChanged;
             SizeChanged += PhotoViewItem_SizeChanged;
+
+            AllowDrop = true;
+            DragEnter += PhotoViewItem_DragEnter;
+            Drop += PhotoViewItem_Drop;
+        }
+
+        private void PhotoViewItem_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetFormats().Contains("FileNameW"))
+            {
+                var filePath = e.Data.GetData("FileNameW") as string[];
+                if (filePath != null && filePath.Length > 0)
+                {
+                    if(photoItem != null)
+                        photoBag.Items.Remove(photoItem);
+
+                    photoBag.Items.Add(new PhotoItem { AreaID = area.Id, FileName = filePath[0] });
+                }
+            }
+        }
+
+        private void PhotoViewItem_DragEnter(object sender, DragEventArgs e)
+        {
+            if(e.Data.GetFormats().Contains("FileNameW"))
+            {
+                var filePath = e.Data.GetData("FileNameW") as string[];
+                if(filePath != null)
+                {
+                    e.Effects = DragDropEffects.Copy;
+                    //e.Handled = true;
+                }
+            }
         }
 
         private void PhotoViewItem_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
@@ -98,12 +135,16 @@ namespace Photo.PrintTool.PhotoLayout.ViewItems
             }
         }
 
+        readonly DisposableList itemDisposables = new DisposableList();
+
         private void SetupPhotoItem(PhotoItem photoItem)
         {
             if (this.photoItem == photoItem)
                 return;
 
-            if(this.photoItem != null)
+            itemDisposables.Dispose();
+
+            if (this.photoItem != null)
             {
                 this.photoItem.Angle.ValueChanged -= Angle_ValueChanged;
                 this.photoItem.FitType.ValueChanged -= FitType_ValueChanged;
@@ -135,6 +176,9 @@ namespace Photo.PrintTool.PhotoLayout.ViewItems
                 this.photoItem.Angle.ValueChanged += Angle_ValueChanged;
                 this.photoItem.FitType.ValueChanged += FitType_ValueChanged;
             }
+
+            foreach (var a in photoItemArranges)
+                itemDisposables.AddRange(a.Arrange(this.photoItem, this));
         }
 
         private void FitType_ValueChanged(object sender, EventArgs e)
@@ -149,7 +193,7 @@ namespace Photo.PrintTool.PhotoLayout.ViewItems
 
         public void Dispose()
         {
-            Children.Remove(displayImage);
+            Children.Remove(canvas);
 
             SizeChanged -= PhotoViewItem_SizeChanged;
             photoBag.Items.CollectionChanged -= Items_CollectionChanged;
