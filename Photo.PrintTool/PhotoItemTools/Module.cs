@@ -71,9 +71,6 @@ namespace Photo.PrintTool.PhotoItemTools
                 yield return new ActionThroughDispose(() => stackPanel.Children.Remove(buttton));
                 yield return new ActionThroughDispose(() => buttton.Command = null);
             }
-
-            
-
         }
 
         public override void Load()

@@ -29,12 +29,18 @@ namespace Photo.Print.LayoutPrint.Controllers
             public PrintItem(Area area)
             {
                 this.Area = area;
-                this.Image = Bitmap.FromFile(area.Photo.Value.FileName);
+                try
+                {
+                    this.Image = Bitmap.FromFile(area.Photo.Value.FileName);
+                }
+                catch
+                {
+                }
             }
 
             public void Dispose()
             {
-                this.Image.Dispose();
+                this.Image?.Dispose();
             }
         }
 
@@ -51,9 +57,18 @@ namespace Photo.Print.LayoutPrint.Controllers
                     printItems.Add(new PrintItem(i));
             }
 
-            protected override void OnPrintPage(PrintPageEventArgs e)
+            protected override void Dispose(bool disposing)
             {
                 foreach (var pi in printItems)
+                    pi.Dispose();
+                printItems.Clear();
+
+                base.Dispose(disposing);
+            }
+
+            protected override void OnPrintPage(PrintPageEventArgs e)
+            {
+                foreach (var pi in printItems.Where(q => q.Image != null))
                 {
                     var l = e.MarginBounds.Left + (pi.Area.Left) * e.MarginBounds.Width;                    
                     var t = e.MarginBounds.Top + (pi.Area.Top) * e.MarginBounds.Height;
@@ -127,7 +142,8 @@ namespace Photo.Print.LayoutPrint.Controllers
         public void Print(Layout.Base.Layout layout)
         {
             using (var print = new LayoutDocument(layout))
-            {                
+            {
+                print.DefaultPageSettings.Landscape = true;
                 print.QueryPageSettings += new QueryPageSettingsEventHandler(print_QueryPageSettings);                
 
                 using (var pd = new PrintDialog() { UseEXDialog = true })

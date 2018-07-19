@@ -69,10 +69,7 @@ namespace Photo.PrintTool.PhotoLayout.ViewItems
             {
                 var filePath = e.Data.GetData("FileNameW") as string[];
                 if(filePath != null)
-                {
                     e.Effects = DragDropEffects.Copy;
-                    //e.Handled = true;
-                }
             }
         }
 
@@ -156,19 +153,24 @@ namespace Photo.PrintTool.PhotoLayout.ViewItems
                 displayImage.Source = null;
             else
             {
-                var image = new BitmapImage();
-
-                using (var stream = new FileStream(photoItem.FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                try
                 {
-                    image.BeginInit();
-                    image.StreamSource = stream;
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.EndInit();
-                }
+                    var image = new BitmapImage();
+                    using (var stream = new FileStream(photoItem.FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    {
+                        image.BeginInit();
+                        image.StreamSource = stream;
+                        image.CacheOption = BitmapCacheOption.OnLoad;
+                        image.EndInit();
+                    }
 
-                displayImage.Source = image;
-                displayImage.Width = image.Width;
-                displayImage.Height = image.Height;
+                    displayImage.Source = image;
+                    displayImage.Width = image.Width;
+                    displayImage.Height = image.Height;
+                }catch
+                {
+                    displayImage.Source = null;
+                }
                 UpdateTransform();
             }
 
