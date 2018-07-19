@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PhotoPrintTool" WindowStyle="SingleBorderWindow"
         mc:Ignorable="d"
-        Title="Print Me" WindowState="Maximized">
+        Title="PrintPhoto" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
