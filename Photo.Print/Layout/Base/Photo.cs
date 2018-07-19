@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Photo.Base
+namespace Photo.Print.Layout.Base
 {
     public struct Photo
     {
-        public string FilePath { get; set; }
-        public DateTime PhotoTime { get; set; }
+        public string FileName { get; set; }
     }
 }

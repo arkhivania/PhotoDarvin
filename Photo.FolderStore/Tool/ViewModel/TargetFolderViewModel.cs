@@ -52,13 +52,13 @@ namespace Photo.FolderStore.Tool.ViewModel
  
         private void PutToFolder()
         {
-            var target = Path.Combine(targetFolder, Path.GetFileName(explorerOperatingState.SelectedPhoto.FilePath));
+            var target = Path.Combine(targetFolder, Path.GetFileName(explorerOperatingState.SelectedPhoto.Value.FilePath));
             var targetFileName = target;
             
             int index = 1;
             while (File.Exists(targetFileName))
             {
-                if (TheSame(explorerOperatingState.SelectedPhoto.FilePath, targetFileName))
+                if (TheSame(explorerOperatingState.SelectedPhoto.Value.FilePath, targetFileName))
                 {
                     Console.Beep(600, 100);
                     return;
@@ -66,7 +66,7 @@ namespace Photo.FolderStore.Tool.ViewModel
 
                 targetFileName = CorrectTarget(target, index++);
             }
-            File.Copy(explorerOperatingState.SelectedPhoto.FilePath, targetFileName, true);
+            File.Copy(explorerOperatingState.SelectedPhoto.Value.FilePath, targetFileName, true);
             Console.Beep(400, 100);
         }
 
