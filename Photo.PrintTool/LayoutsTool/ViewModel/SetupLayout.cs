@@ -20,7 +20,11 @@ namespace Photo.PrintTool.LayoutsTool.ViewModel
 
             Layouts.AddItem(new Base.Layout { Rows = 1, Columns = 1 });
             Layouts.AddItem(new Base.Layout { Rows = 1, Columns = 2 });
+            Layouts.AddItem(new Base.Layout { Rows = 2, Columns = 1 });
             Layouts.AddItem(new Base.Layout { Rows = 2, Columns = 2 });
+            Layouts.AddItem(new Base.Layout { Rows = 4, Columns = 2 });
+            Layouts.AddItem(new Base.Layout { Rows = 2, Columns = 4 });
+            Layouts.AddItem(new Base.Layout { Rows = 4, Columns = 4 });
 
             Layouts.Value = Layouts.First();
             Layouts.ValueChanged += Layouts_ValueChanged;

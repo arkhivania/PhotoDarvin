@@ -25,7 +25,7 @@ namespace Photo.PrintTool.PhotoLayout.ViewItems
         PhotoItem photoItem = new PhotoItem();
 
         readonly Image displayImage = new Image();
-        readonly Canvas canvas = new Canvas() { VerticalAlignment = VerticalAlignment.Stretch, HorizontalAlignment = HorizontalAlignment.Stretch };
+        readonly Canvas canvas = new Canvas() { VerticalAlignment = VerticalAlignment.Stretch, HorizontalAlignment = HorizontalAlignment.Stretch, CacheMode = new BitmapCache() { } };
 
         public PhotoViewItem(IPhotoBag photoBag, Area area, Base.IPhotoItemArrange[] photoItemArranges)
         {
@@ -34,6 +34,7 @@ namespace Photo.PrintTool.PhotoLayout.ViewItems
             this.photoItemArranges = photoItemArranges;
             Background = Brushes.Transparent;
             this.ClipToBounds = true;
+            RenderOptions.SetBitmapScalingMode(displayImage, BitmapScalingMode.Fant);
 
             canvas.Children.Add(displayImage);
             Children.Add(canvas);

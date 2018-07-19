@@ -30,9 +30,10 @@ namespace Photo.PrintTool.PhotoItemTools
             {
                 var buttton = new Button()
                 {
-                    Content = "Fit Type",
+                    Content = new MaterialDesignThemes.Wpf.PackIcon() { Kind = MaterialDesignThemes.Wpf.PackIconKind.MoveResize, VerticalAlignment = System.Windows.VerticalAlignment.Center },
+                    ToolTip = "Crop/Fit",
                     Command = vm.SwitchFitTypeCommand,
-                    Margin = new System.Windows.Thickness(10, 10, 10, 10),
+                    Margin = new System.Windows.Thickness(2, 10, 10, 10),
                     HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
                     VerticalAlignment = System.Windows.VerticalAlignment.Top
                 };
@@ -44,9 +45,10 @@ namespace Photo.PrintTool.PhotoItemTools
             {
                 var buttton = new Button()
                 {
-                    Content = "Rotate CCW",
+                    Content = new MaterialDesignThemes.Wpf.PackIcon() { Kind = MaterialDesignThemes.Wpf.PackIconKind.RotateLeft, VerticalAlignment = System.Windows.VerticalAlignment.Center },
+                    ToolTip = "Rotate left",
                     Command = vm.RotateLeft,
-                    Margin = new System.Windows.Thickness(2, 10, 2, 10),
+                    Margin = new System.Windows.Thickness(2, 10, 2, 10),                    
                     HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
                     VerticalAlignment = System.Windows.VerticalAlignment.Top
                 };
@@ -58,7 +60,8 @@ namespace Photo.PrintTool.PhotoItemTools
             {
                 var buttton = new Button()
                 {
-                    Content = "Rotate CW",
+                    Content = new MaterialDesignThemes.Wpf.PackIcon() { Kind = MaterialDesignThemes.Wpf.PackIconKind.RotateRight, VerticalAlignment = System.Windows.VerticalAlignment.Center },
+                    ToolTip = "Rotate right",
                     Command = vm.RotateRight,
                     Margin = new System.Windows.Thickness(2, 10, 2, 10),
                     HorizontalAlignment = System.Windows.HorizontalAlignment.Right,

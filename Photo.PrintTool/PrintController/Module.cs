@@ -17,8 +17,13 @@ namespace Photo.PrintTool.PrintController
         {
             if (trayType == TrayType.Tools)
             {
+
                 var controller = Kernel.Get<Controllers.Controller>();
-                var printButton = new Button() { Content = "Print", Command = controller.PrintCommand };
+                var sp = new StackPanel() { Orientation = Orientation.Horizontal };
+                sp.Children.Add(new MaterialDesignThemes.Wpf.PackIcon() { Kind = MaterialDesignThemes.Wpf.PackIconKind.Printer, VerticalAlignment = System.Windows.VerticalAlignment.Center, Margin = new System.Windows.Thickness(5) });
+                sp.Children.Add(new TextBlock() { Text = "Print", VerticalAlignment = System.Windows.VerticalAlignment.Center, Margin = new System.Windows.Thickness(5) });
+
+                var printButton = new Button() { Content = sp, Command = controller.PrintCommand };
                 toolBar.Items.Add(printButton);
 
                 yield return new ActionThroughDispose(() => toolBar.Items.Remove(printButton));

@@ -1,4 +1,5 @@
-﻿using Nailhang.Core;
+﻿using MaterialDesignThemes.Wpf;
+using Nailhang.Core;
 using Ninject;
 using Photo.PrintTool.AreaLayouts.Base;
 using Photo.PrintTool.Base;
@@ -33,6 +34,7 @@ namespace PhotoPrintTool
 
         public MainWindow()
         {
+            new PaletteHelper().SetLightDark(true);
             InitializeComponent();
 
             Loaded += MainWindow_Loaded;
@@ -81,8 +83,12 @@ namespace PhotoPrintTool
                 disposables.AddRange(a.ArrangeToolBar(toolBar_Tools, TrayType.Tools));
             }
 
+            foreach (var tb in new[] { toolBar_Main, toolBar_Layout, toolBar_Tools })
+                if (tb.Items.Count == 0)
+                    tb.Visibility = Visibility.Collapsed;
 
-            var view = kernel.Get<Photo.PrintTool.AreaLayouts.Base.IToolViewFactory>().CreateView();
+
+            var view = kernel.Get<IToolViewFactory>().CreateView();
             grid_Sheet.Children.Add(view);
         }
     }

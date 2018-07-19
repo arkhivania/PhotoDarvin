@@ -31,7 +31,7 @@ namespace Photo.PrintTool.DragHereItem
             };
             drag_photo_here.Children.Add(rectangle);
 
-            var tb = new TextBlock { Text = "Drag photo file here", VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            var tb = new TextBlock { Text = "Drag and Drop photo file here", VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             drag_photo_here.Children.Add(tb);
 
             grid.Children.Add(drag_photo_here);
