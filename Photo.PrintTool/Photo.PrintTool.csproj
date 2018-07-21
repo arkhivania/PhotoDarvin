@@ -76,6 +76,7 @@
     <Compile Include="AreaLayouts\Tests\DIsplay.cs" />
     <Compile Include="Base\IToolBarArrange.cs" />
     <Compile Include="Base\TrayType.cs" />
+    <Compile Include="LayoutsTool\ViewModel\BorderDisplay.cs" />
     <Compile Include="DragHereItem\Module.cs" />
     <Compile Include="LayoutsTool\Base\Layout.cs" />
     <Compile Include="LayoutsTool\Module.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="PhotoItemTools\ViewModel\PhotoItemViewModel.cs" />
     <Compile Include="PhotoLayout\Base\IPhotoBag.cs" />
     <Compile Include="PhotoLayout\Base\IPhotoItemArrange.cs" />
+    <Compile Include="PhotoLayout\Base\LayoutCache.cs" />
     <Compile Include="PhotoLayout\Base\PhotoItem.cs" />
     <Compile Include="PhotoLayout\Module.cs" />
     <Compile Include="PhotoLayout\Processing\PhotoBag.cs" />

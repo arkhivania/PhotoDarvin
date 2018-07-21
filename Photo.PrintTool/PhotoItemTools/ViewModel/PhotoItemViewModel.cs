@@ -11,18 +11,37 @@ namespace Photo.PrintTool.PhotoItemTools.ViewModel
 {
     class PhotoItemViewModel : IDisposable
     {
+        private readonly IPhotoBag photoBag;
         private readonly PhotoItem photoItem;
 
         public DelegateCommand RotateLeft { get; }
         public DelegateCommand RotateRight { get; }
         public DelegateCommand SwitchFitTypeCommand { get; }
+        public DelegateCommand RemovePhotoCommand { get; }
 
-        public PhotoItemViewModel(PhotoItem photoItem)
+        public PhotoItemViewModel(IPhotoBag photoBag, PhotoItem photoItem)
         {
+            this.photoBag = photoBag;
             this.photoItem = photoItem;
+
             RotateLeft = new DelegateCommand(() => photoItem.Angle.Value -= 90);
             RotateRight = new DelegateCommand(() => photoItem.Angle.Value += 90);
             SwitchFitTypeCommand = new DelegateCommand(() => SwitchFitType());
+            RemovePhotoCommand = new DelegateCommand(() => Remove());
+        }
+
+        private void Remove()
+        {
+            var index = photoItem.AreaID;
+            photoBag.Items.Remove(photoItem);
+            foreach(var pi in photoBag.Items
+                .Where(q => q.AreaID > index)
+                .ToArray())
+            {
+                photoBag.Items.Remove(pi);
+                pi.AreaID--;
+                photoBag.Items.Add(pi);
+            }
         }
 
         void SwitchFitType()

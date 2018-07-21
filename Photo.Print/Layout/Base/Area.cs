@@ -17,5 +17,7 @@ namespace Photo.Print.Layout.Base
         public Photo? Photo { get; set; }
         public float Angle { get; set; }
         public FitType FitType { get; set; }
+
+        public double Border { get; set; }
     }
 }

@@ -13,23 +13,38 @@ namespace Photo.PrintTool.LayoutsTool.ViewModel
         private readonly IAreaLayouts areaLayouts;
 
         public CollectionWithCurrentItem<Base.Layout> Layouts { get; } = new CollectionWithCurrentItem<Base.Layout>();
+        public CollectionWithCurrentItem<BorderDisplay> Borders { get; } = new CollectionWithCurrentItem<BorderDisplay>();
 
         public SetupLayout(IAreaLayouts areaLayouts)
         {
             this.areaLayouts = areaLayouts;
 
+            Borders.AddItem(new BorderDisplay { Name = "No borders", BorderSize = 0 });
+            Borders.AddItem(new BorderDisplay { Name = "Small borders", BorderSize = 0.001 });
+            Borders.AddItem(new BorderDisplay { Name = "Medium borders", BorderSize = 0.005 });
+            Borders.AddItem(new BorderDisplay { Name = "Large borders", BorderSize = 0.010 });
+
             Layouts.AddItem(new Base.Layout { Rows = 1, Columns = 1 });
             Layouts.AddItem(new Base.Layout { Rows = 1, Columns = 2 });
             Layouts.AddItem(new Base.Layout { Rows = 2, Columns = 1 });
             Layouts.AddItem(new Base.Layout { Rows = 2, Columns = 2 });
+            Layouts.AddItem(new Base.Layout { Rows = 3, Columns = 3 });
             Layouts.AddItem(new Base.Layout { Rows = 4, Columns = 2 });
             Layouts.AddItem(new Base.Layout { Rows = 2, Columns = 4 });
             Layouts.AddItem(new Base.Layout { Rows = 4, Columns = 4 });
 
-            Layouts.Value = Layouts.First();
+            Borders.Value = Borders.Skip(1).First();
+            Layouts.Value = Layouts.Skip(3).First();
+
+            Borders.ValueChanged += Borders_ValueChanged;
             Layouts.ValueChanged += Layouts_ValueChanged;
 
             UpdateAreas();            
+        }
+
+        private void Borders_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateAreas();
         }
 
         private void Layouts_ValueChanged(object sender, EventArgs e)
@@ -47,14 +62,18 @@ namespace Photo.PrintTool.LayoutsTool.ViewModel
 
             for (int j = 0; j < l.Rows; ++j)
                 for(int i = 0; i < l.Columns; ++i)
-                    areas.Add(new Area { Left = cell_width * i, Top = cell_height * j, Width = cell_width, Height = cell_height, Id = $"{j * l.Columns + i}" });
+                    areas.Add(new Area { Left = cell_width * i, Top = cell_height * j, Width = cell_width, Height = cell_height, Id = j * l.Columns + i });
 
-
-            areaLayouts.LayoutState.Value = new Layout() { Areas = areas.ToArray() };
+            areaLayouts.LayoutState.Value = new Layout()
+            {
+                Areas = areas.ToArray(),
+                BorderSize = Borders.Value.BorderSize
+            };
         }
 
         public void Dispose()
         {
+            Borders.ValueChanged -= Borders_ValueChanged;
             Layouts.ValueChanged -= Layouts_ValueChanged;
         }
     }

@@ -56,18 +56,21 @@ namespace Photo.PrintTool.AreaLayouts.Views
 
         private void ArrangeItems()
         {
+            var layout = areaLayouts.LayoutState.Value;
+
             var width = canvas_Main.ActualWidth;
             var height = canvas_Main.ActualHeight;
+            var border_wh = System.Math.Min(width, height);
 
             if (width > 0 && height > 0)
             {
                 foreach (var i in canvas_Main.Children.OfType<AreaItem>())
                 {
-                    Canvas.SetLeft(i, i.Area.Left * width);
-                    Canvas.SetTop(i, i.Area.Top * height);
+                    Canvas.SetLeft(i, i.Area.Left * width + layout.BorderSize * border_wh);
+                    Canvas.SetTop(i, i.Area.Top * height + layout.BorderSize * border_wh);
 
-                    i.Width = i.Area.Width * width;
-                    i.Height = i.Area.Height * height;
+                    i.Width = i.Area.Width * width - 2 * layout.BorderSize * border_wh;
+                    i.Height = i.Area.Height * height - 2 * layout.BorderSize * border_wh;
                 }
             }
         }
@@ -101,7 +104,12 @@ namespace Photo.PrintTool.AreaLayouts.Views
             if (areaLayouts.LayoutState.Value.Areas != null)
                 foreach (var a in areaLayouts.LayoutState.Value.Areas)
                 {
-                    var ai = new AreaItem(a) { VerticalAlignment = VerticalAlignment.Stretch, HorizontalAlignment = HorizontalAlignment.Stretch };
+                    var ai = new AreaItem(a)
+                    {
+                        VerticalAlignment = VerticalAlignment.Stretch,
+                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                        UseLayoutRounding = true
+                    };
                     foreach (var arr in arrangers)
                         disposables.AddRange(arr.ArrangeArea(ai, a));
 

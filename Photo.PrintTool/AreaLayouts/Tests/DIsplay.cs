@@ -31,16 +31,17 @@ namespace Photo.PrintTool.AreaLayouts.Tests
                 {
                     Areas = new Area[] 
                     {
-                        new Area { Width = 0.5f, Height = 0.5f, Left = 0.0f, Top = 0.0f, Id = "0" },
-                        new Area { Width = 0.5f, Height = 0.5f, Left = 0.5f, Top = 0.0f, Id = "1" },
-                        new Area { Width = 0.5f, Height = 0.5f, Left = 0.0f, Top = 0.5f, Id = "2" },
-                        new Area { Width = 0.5f, Height = 0.5f, Left = 0.5f, Top = 0.5f, Id = "3" },
-                    }
+                        new Area { Width = 0.5f, Height = 0.5f, Left = 0.0f, Top = 0.0f, Id = 0 },
+                        new Area { Width = 0.5f, Height = 0.5f, Left = 0.5f, Top = 0.0f, Id = 1 },
+                        new Area { Width = 0.5f, Height = 0.5f, Left = 0.0f, Top = 0.5f, Id = 2 },
+                        new Area { Width = 0.5f, Height = 0.5f, Left = 0.5f, Top = 0.5f, Id = 3 },
+                    },
+                    BorderSize = 0.005
                 };
 
                 var pb = kernel.Get<IPhotoBag>();
-                pb.Items.Add(new PhotoItem { AreaID = "0", FileName = @"C:\temp\Print\DSC_0344.JPG" });
-                pb.Items.Add(new PhotoItem { AreaID = "1", FileName = @"C:\temp\Print\DSC_0333.JPG" });
+                pb.Items.Add(new PhotoItem { AreaID = 0, FileName = @"C:\temp\Print\DSC_0344.JPG" });
+                pb.Items.Add(new PhotoItem { AreaID = 1, FileName = @"C:\temp\Print\DSC_0333.JPG" });
 
                 var window = new Window();
                 window.Content = kernel.Get<Base.IToolViewFactory>().CreateView();

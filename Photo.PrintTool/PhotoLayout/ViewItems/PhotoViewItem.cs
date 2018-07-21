@@ -22,16 +22,21 @@ namespace Photo.PrintTool.PhotoLayout.ViewItems
         private readonly IPhotoBag photoBag;
         private readonly Area area;
         private readonly IPhotoItemArrange[] photoItemArranges;
+        private readonly LayoutCache layoutCache;
         PhotoItem photoItem = new PhotoItem();
 
         readonly Image displayImage = new Image();
         readonly Canvas canvas = new Canvas() { VerticalAlignment = VerticalAlignment.Stretch, HorizontalAlignment = HorizontalAlignment.Stretch, CacheMode = new BitmapCache() { } };
 
-        public PhotoViewItem(IPhotoBag photoBag, Area area, Base.IPhotoItemArrange[] photoItemArranges)
+        public PhotoViewItem(IPhotoBag photoBag,
+            Area area,
+            IPhotoItemArrange[] photoItemArranges,
+            LayoutCache layoutCache)
         {
             this.photoBag = photoBag;
             this.area = area;
             this.photoItemArranges = photoItemArranges;
+            this.layoutCache = layoutCache;
             Background = Brushes.Transparent;
             this.ClipToBounds = true;
             RenderOptions.SetBitmapScalingMode(displayImage, BitmapScalingMode.Fant);
@@ -50,25 +55,66 @@ namespace Photo.PrintTool.PhotoLayout.ViewItems
 
         private void PhotoViewItem_Drop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetFormats().Contains("FileNameW"))
+            try
             {
-                var filePath = e.Data.GetData("FileNameW") as string[];
-                if (filePath != null && filePath.Length > 0)
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    if(photoItem != null)
-                        photoBag.Items.Remove(photoItem);
+                    string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-                    photoBag.Items.Add(new PhotoItem { AreaID = area.Id, FileName = filePath[0] });
+                    if (files.Length == 1)
+                    {
+                        var dir = new DirectoryInfo(files[0]);
+                        if (dir.Exists)
+                            files = dir.GetFiles("*.jpg", SearchOption.AllDirectories)
+                                .Concat(dir.GetFiles("*.jpeg", SearchOption.AllDirectories))
+                                .Concat(dir.GetFiles("*.png", SearchOption.AllDirectories))
+                                .Select(q => q.FullName).ToArray();
+                    }
+
+                    if (files.Length == 1)
+                    {
+                        if (photoItem != null)
+                            photoBag.Items.Remove(photoItem);
+
+                        layoutCache.RemoveCached(files[0]);
+
+                        photoBag.Items.Add(new PhotoItem
+                        {
+                            AreaID = area.Id,
+                            FileName = files[0]
+                        });
+                    }
+                    else
+                    {
+                        var targetIndex = area.Id;
+
+                        foreach (var filePath in files)
+                        {
+                            var targetPI = photoBag.Items.FirstOrDefault(q => q.AreaID == targetIndex);
+
+                            if (photoItem != null)
+                                photoBag.Items.Remove(targetPI);
+
+                            layoutCache.RemoveCached(filePath);
+                            photoBag.Items.Add(new PhotoItem
+                            {
+                                AreaID = targetIndex,
+                                FileName = filePath
+                            });
+                            targetIndex++;
+                        }
+                    }
                 }
             }
+            catch { }
         }
 
         private void PhotoViewItem_DragEnter(object sender, DragEventArgs e)
         {
-            if(e.Data.GetFormats().Contains("FileNameW"))
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                var filePath = e.Data.GetData("FileNameW") as string[];
-                if(filePath != null)
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (files.Length > 0)
                     e.Effects = DragDropEffects.Copy;
             }
         }
@@ -127,7 +173,7 @@ namespace Photo.PrintTool.PhotoLayout.ViewItems
                 m2d.Translate(-sw_source / 2f, -sh_source / 2f);
                 m2d.Rotate(angle);
                 m2d.Scale(scale, scale);
-                m2d.Translate(ActualWidth/2, ActualHeight/2);
+                m2d.Translate(ActualWidth / 2, ActualHeight / 2);
 
                 displayImage.RenderTransform = new MatrixTransform(m2d);
             }
@@ -155,19 +201,25 @@ namespace Photo.PrintTool.PhotoLayout.ViewItems
             {
                 try
                 {
-                    var image = new BitmapImage();
-                    using (var stream = new FileStream(photoItem.FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    var image = layoutCache.TryGetFromCache(photoItem.FileName);
+                    if (image == null)
                     {
-                        image.BeginInit();
-                        image.StreamSource = stream;
-                        image.CacheOption = BitmapCacheOption.OnLoad;
-                        image.EndInit();
+                        image = new BitmapImage();
+                        using (var stream = new FileStream(photoItem.FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                        {
+                            image.BeginInit();
+                            image.StreamSource = stream;
+                            image.CacheOption = BitmapCacheOption.OnLoad;
+                            image.EndInit();
+                        }
+                        layoutCache.StoreInCache(photoItem.FileName, image);
                     }
 
                     displayImage.Source = image;
                     displayImage.Width = image.Width;
                     displayImage.Height = image.Height;
-                }catch
+                }
+                catch
                 {
                     displayImage.Source = null;
                 }

@@ -69,10 +69,10 @@ namespace PhotoPrintTool
             {
                 Areas = new Area[]
                 {
-                    new Area { Height = 0.5f, Width = 0.5f, Left = 0.0f, Top = 0.0f, Id = "0" },
-                    new Area { Height = 0.5f, Width = 0.5f, Left = 0.5f, Top = 0.0f, Id = "1" },
-                    new Area { Height = 0.5f, Width = 0.5f, Left = 0.0f, Top = 0.5f, Id = "2" },
-                    new Area { Height = 0.5f, Width = 0.5f, Left = 0.5f, Top = 0.5f, Id = "3" },
+                    new Area { Height = 0.5f, Width = 0.5f, Left = 0.0f, Top = 0.0f, Id = 0 },
+                    new Area { Height = 0.5f, Width = 0.5f, Left = 0.5f, Top = 0.0f, Id = 1 },
+                    new Area { Height = 0.5f, Width = 0.5f, Left = 0.0f, Top = 0.5f, Id = 2 },
+                    new Area { Height = 0.5f, Width = 0.5f, Left = 0.5f, Top = 0.5f, Id = 3 },
                 }
             };
 

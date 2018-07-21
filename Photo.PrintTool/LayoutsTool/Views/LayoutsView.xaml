@@ -10,7 +10,8 @@
     <Grid Name="grid_LayoutRoot">
         <StackPanel Orientation="Horizontal">
             <Label Content="Layout:" VerticalAlignment="Center" Margin="10"/>
-            <ComboBox ItemsSource="{Binding Layouts}" DisplayMemberPath="Name" SelectedItem="{Binding Layouts.Value, Mode=TwoWay}" />
-        </StackPanel>        
+            <ComboBox ItemsSource="{Binding Layouts}" DisplayMemberPath="Name" SelectedItem="{Binding Layouts.Value, Mode=TwoWay}" Margin="10" />
+            <ComboBox ItemsSource="{Binding Borders, Mode=OneWay}" DisplayMemberPath="Name" SelectedItem="{Binding Borders.Value, Mode=TwoWay}" Margin="10" />
+        </StackPanel>
     </Grid>
 </UserControl>

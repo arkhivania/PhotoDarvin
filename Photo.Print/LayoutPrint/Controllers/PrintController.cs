@@ -73,8 +73,16 @@ namespace Photo.Print.LayoutPrint.Controllers
                     var l = e.MarginBounds.Left + (pi.Area.Left) * e.MarginBounds.Width;                    
                     var t = e.MarginBounds.Top + (pi.Area.Top) * e.MarginBounds.Height;
 
+                    var border_wh = System.Math.Min(e.MarginBounds.Width, e.MarginBounds.Height);
+
+                    l += pi.Area.Border * border_wh;
+                    t += pi.Area.Border * border_wh;
+
                     var tw = (pi.Area.Width) * e.MarginBounds.Width;
                     var th = (pi.Area.Height) * e.MarginBounds.Height;
+
+                    tw -= 2.0 * pi.Area.Border * border_wh;
+                    th -= 2.0 * pi.Area.Border * border_wh;
 
                     var tc_x = l + tw / 2;
                     var tc_y = t + th / 2;
@@ -144,7 +152,8 @@ namespace Photo.Print.LayoutPrint.Controllers
             using (var print = new LayoutDocument(layout))
             {
                 print.DefaultPageSettings.Landscape = true;
-                print.QueryPageSettings += new QueryPageSettingsEventHandler(print_QueryPageSettings);                
+                SetupPageSettings(print.DefaultPageSettings);
+                //print.QueryPageSettings += new QueryPageSettingsEventHandler(print_QueryPageSettings);                
 
                 using (var pd = new PrintDialog() { UseEXDialog = true })
                 {
@@ -153,15 +162,15 @@ namespace Photo.Print.LayoutPrint.Controllers
                     {
                         using (PageSetupDialog psd = new PageSetupDialog())
                         {
-                            psd.Document = print;
-                            SetupPageSettings(psd.PageSettings);
+                            psd.Document = print;                            
                             if (psd.ShowDialog(parentWindow) == DialogResult.OK)
                             {
-                                using (PrintPreviewDialog prev = new PrintPreviewDialog())
-                                {
-                                    prev.Document = print;
-                                    prev.ShowDialog(parentWindow);
-                                }
+                                //using (PrintPreviewDialog prev = new PrintPreviewDialog())
+                                //{
+                                //    prev.Document = print;
+                                //    prev.ShowDialog(parentWindow);
+                                //}
+                                print.Print();
                             }
                         }
                     }
@@ -177,9 +186,9 @@ namespace Photo.Print.LayoutPrint.Controllers
                     pageSettings.PrinterResolution = r;
         }
 
-        private void print_QueryPageSettings(object sender, QueryPageSettingsEventArgs e)
-        {
-            SetupPageSettings(e.PageSettings);
-        }
+        //private void print_QueryPageSettings(object sender, QueryPageSettingsEventArgs e)
+        //{
+        //    SetupPageSettings(e.PageSettings);
+        //}
     }
 }

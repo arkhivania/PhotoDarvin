@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Photo.PrintTool.AreaLayouts.Base
+namespace Photo.PrintTool.LayoutsTool.ViewModel
 {
-    public struct Layout
+    public struct BorderDisplay
     {
-        public Area[] Areas { get; set; }
+        public string Name { get; set; }
         public double BorderSize { get; set; }
     }
 }

@@ -24,6 +24,9 @@ namespace Photo.PrintTool.PhotoLayout
 
         public override void Load()
         {
+            Kernel.Bind<Base.LayoutCache>()
+                .ToSelf().InSingletonScope();
+
             Kernel.Bind<Base.IPhotoBag>()
                 .To<Processing.PhotoBag>()
                 .InSingletonScope();

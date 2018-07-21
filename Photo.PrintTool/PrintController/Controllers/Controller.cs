@@ -50,7 +50,8 @@ namespace Photo.PrintTool.PrintController.Controllers
                         Height = sa.Height,
                         Left = sa.Left,
                         Top = sa.Top,
-                        Photo = new Print.Layout.Base.Photo { FileName = pi.FileName }
+                        Photo = new Print.Layout.Base.Photo { FileName = pi.FileName },
+                        Border = sl.BorderSize
                     });
                 }
             }
