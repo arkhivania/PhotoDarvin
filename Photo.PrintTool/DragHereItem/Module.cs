@@ -27,7 +27,7 @@ namespace Photo.PrintTool.DragHereItem
                 Fill = Brushes.LightGray,
                 RadiusX = 5,
                 RadiusY = 5,
-                UseLayoutRounding = false
+                UseLayoutRounding = true
             };
             drag_photo_here.Children.Add(rectangle);
 

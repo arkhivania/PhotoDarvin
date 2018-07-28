@@ -9,5 +9,6 @@ namespace Photo.Print.Layout.Base
     public struct Layout
     {
         public Area[] Items { get; set; }
+        public bool IsLandscape { get; set; }
     }
 }

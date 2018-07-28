@@ -20,7 +20,7 @@ namespace Photo.PrintTool.LayoutsTool.ViewModel
             this.areaLayouts = areaLayouts;
 
             Borders.AddItem(new BorderDisplay { Name = "No borders", BorderSize = 0 });
-            Borders.AddItem(new BorderDisplay { Name = "Small borders", BorderSize = 0.001 });
+            Borders.AddItem(new BorderDisplay { Name = "Small borders", BorderSize = 0.0025 });
             Borders.AddItem(new BorderDisplay { Name = "Medium borders", BorderSize = 0.005 });
             Borders.AddItem(new BorderDisplay { Name = "Large borders", BorderSize = 0.010 });
 

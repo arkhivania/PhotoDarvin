@@ -20,7 +20,7 @@
             <ToolBar Name="toolBar_Tools" BandIndex="2" ToolBarTray.IsLocked="True"/>
         </ToolBarTray>
         
-        <Grid Grid.Row="1" Name="grid_Sheet">
+        <Grid Grid.Row="1" Name="grid_Main">
             
         </Grid>
         

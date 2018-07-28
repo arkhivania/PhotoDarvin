@@ -151,7 +151,7 @@ namespace Photo.Print.LayoutPrint.Controllers
         {
             using (var print = new LayoutDocument(layout))
             {
-                print.DefaultPageSettings.Landscape = true;
+                print.DefaultPageSettings.Landscape = layout.IsLandscape;
                 SetupPageSettings(print.DefaultPageSettings);
                 //print.QueryPageSettings += new QueryPageSettingsEventHandler(print_QueryPageSettings);                
 

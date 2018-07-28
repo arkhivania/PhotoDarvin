@@ -64,6 +64,7 @@ namespace PhotoPrintTool
             kernel.Load<Photo.PrintTool.PhotoLayout.Module>();
             kernel.Load<Photo.PrintTool.LayoutsTool.Module>();
             kernel.Load<Photo.PrintTool.PrintController.Module>();
+            kernel.Load<Photo.PrintTool.PhotoSheet.Module>();
 
             foreach (var a in kernel.GetAll<IToolBarArrange>())
             {
@@ -72,13 +73,12 @@ namespace PhotoPrintTool
                 disposables.AddRange(a.ArrangeToolBar(toolBar_Tools, TrayType.Tools));
             }
 
+            foreach (var q in kernel.GetAll<IMainGridArrange>())
+                disposables.AddRange(q.Arrange(grid_Main));
+
             foreach (var tb in new[] { toolBar_Main, toolBar_Layout, toolBar_Tools })
                 if (tb.Items.Count == 0)
                     tb.Visibility = Visibility.Collapsed;
-
-
-            var view = kernel.Get<IToolViewFactory>().CreateView();
-            grid_Sheet.Children.Add(view);
         }
     }
 }

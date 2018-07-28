@@ -74,6 +74,7 @@
     <Compile Include="AreaLayouts\Base\IAreaLayouts.cs" />
     <Compile Include="AreaLayouts\Controllers\AreaLayouts.cs" />
     <Compile Include="AreaLayouts\Tests\DIsplay.cs" />
+    <Compile Include="Base\IMainGridArrange.cs" />
     <Compile Include="Base\IToolBarArrange.cs" />
     <Compile Include="Base\TrayType.cs" />
     <Compile Include="LayoutsTool\ViewModel\BorderDisplay.cs" />
@@ -93,6 +94,11 @@
     <Compile Include="PhotoLayout\Module.cs" />
     <Compile Include="PhotoLayout\Processing\PhotoBag.cs" />
     <Compile Include="PhotoLayout\ViewItems\PhotoViewItem.cs" />
+    <Compile Include="PhotoSheet\Base\ISheetLayout.cs" />
+    <Compile Include="PhotoSheet\Module.cs" />
+    <Compile Include="PhotoSheet\Views\SheetViewView.xaml.cs">
+      <DependentUpon>SheetViewView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PrintController\Controllers\Controller.cs" />
     <Compile Include="PrintController\Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -112,6 +118,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LayoutsTool\Views\LayoutsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PhotoSheet\Views\SheetViewView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

@@ -15,15 +15,16 @@ namespace Photo.PrintTool.PrintController.Controllers
         private readonly ILayoutPrint layoutPrint;
         private readonly IPhotoBag photoBag;
         private readonly IAreaLayouts areaLayouts;
+        private readonly PhotoSheet.Base.ISheetLayout sheetLayout;
 
         public DelegateCommand PrintCommand { get; }
 
-        public Controller(ILayoutPrint layoutPrint, IPhotoBag photoBag, IAreaLayouts areaLayouts)
+        public Controller(ILayoutPrint layoutPrint, IPhotoBag photoBag, IAreaLayouts areaLayouts, PhotoSheet.Base.ISheetLayout sheetLayout)
         {            
             this.layoutPrint = layoutPrint;
             this.photoBag = photoBag;
             this.areaLayouts = areaLayouts;
-
+            this.sheetLayout = sheetLayout;
             PrintCommand = new DelegateCommand(() => PrintPage(), () => photoBag.Items.Any());
             photoBag.Items.CollectionChanged += Items_CollectionChanged;
         }
@@ -56,7 +57,11 @@ namespace Photo.PrintTool.PrintController.Controllers
                 }
             }
 
-            layoutPrint.Print(new Print.Layout.Base.Layout { Items = print_areas.ToArray() });
+            layoutPrint.Print(new Print.Layout.Base.Layout
+            {
+                Items = print_areas.ToArray(),
+                IsLandscape = sheetLayout.IsLandscape.Value
+            });
         }
 
         public void Dispose()
