@@ -65,17 +65,6 @@ namespace PhotoPrintTool
             kernel.Load<Photo.PrintTool.LayoutsTool.Module>();
             kernel.Load<Photo.PrintTool.PrintController.Module>();
 
-            kernel.Get<IAreaLayouts>().LayoutState.Value = new Layout
-            {
-                Areas = new Area[]
-                {
-                    new Area { Height = 0.5f, Width = 0.5f, Left = 0.0f, Top = 0.0f, Id = 0 },
-                    new Area { Height = 0.5f, Width = 0.5f, Left = 0.5f, Top = 0.0f, Id = 1 },
-                    new Area { Height = 0.5f, Width = 0.5f, Left = 0.0f, Top = 0.5f, Id = 2 },
-                    new Area { Height = 0.5f, Width = 0.5f, Left = 0.5f, Top = 0.5f, Id = 3 },
-                }
-            };
-
             foreach (var a in kernel.GetAll<IToolBarArrange>())
             {
                 disposables.AddRange(a.ArrangeToolBar(toolBar_Main, TrayType.Main));
