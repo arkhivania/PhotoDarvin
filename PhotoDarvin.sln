@@ -32,6 +32,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoFace", "PhotoFace\PhotoFace.csproj", "{56EAE0AE-BE76-40D2-8CDE-49CCDF15DC56}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Photo.Processing", "Photo.Processing\Photo.Processing.csproj", "{7A18DC4C-4CA1-45ED-893D-4D1B6652DF9F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{24E0FA89-E526-493D-81B8-81C833C1F782} = {24E0FA89-E526-493D-81B8-81C833C1F782}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Native", "Native\Native.vcxproj", "{24E0FA89-E526-493D-81B8-81C833C1F782}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -229,6 +234,16 @@ Global
 		{7A18DC4C-4CA1-45ED-893D-4D1B6652DF9F}.Release|x64.Build.0 = Release|Any CPU
 		{7A18DC4C-4CA1-45ED-893D-4D1B6652DF9F}.Release|x86.ActiveCfg = Release|Any CPU
 		{7A18DC4C-4CA1-45ED-893D-4D1B6652DF9F}.Release|x86.Build.0 = Release|Any CPU
+		{24E0FA89-E526-493D-81B8-81C833C1F782}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{24E0FA89-E526-493D-81B8-81C833C1F782}.Debug|Any CPU.Build.0 = Debug|x64
+		{24E0FA89-E526-493D-81B8-81C833C1F782}.Debug|x64.ActiveCfg = Debug|x64
+		{24E0FA89-E526-493D-81B8-81C833C1F782}.Debug|x64.Build.0 = Debug|x64
+		{24E0FA89-E526-493D-81B8-81C833C1F782}.Debug|x86.ActiveCfg = Debug|x64
+		{24E0FA89-E526-493D-81B8-81C833C1F782}.Release|Any CPU.ActiveCfg = Debug|x64
+		{24E0FA89-E526-493D-81B8-81C833C1F782}.Release|Any CPU.Build.0 = Debug|x64
+		{24E0FA89-E526-493D-81B8-81C833C1F782}.Release|x64.ActiveCfg = Release|x64
+		{24E0FA89-E526-493D-81B8-81C833C1F782}.Release|x64.Build.0 = Release|x64
+		{24E0FA89-E526-493D-81B8-81C833C1F782}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

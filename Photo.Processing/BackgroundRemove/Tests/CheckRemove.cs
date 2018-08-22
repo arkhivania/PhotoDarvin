@@ -13,7 +13,8 @@ namespace Photo.Processing.BackgroundRemove.Tests
         [Test]
         public void TestRB()
         {
-
+            var res =  UnsafeNativeMethods.Sample_Call(10);
+            Assert.AreEqual(100, res);
         }
     }
 }
