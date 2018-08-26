@@ -64,7 +64,9 @@
     <Error Condition="!Exists('..\packages\NUnit3TestAdapter.3.10.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.3.10.0\build\net35\NUnit3TestAdapter.props'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)..\x64\$(ConfigurationName)\Native.pdb" "$(TargetDir)\"
+    <PostBuildEvent>copy "$(ProjectDir)..\..\..\OpenCV\build\x64\vc14\bin\opencv_*.dll" "$(TargetDir)\"
+
+copy "$(ProjectDir)..\x64\$(ConfigurationName)\Native.pdb" "$(TargetDir)\"
 copy "$(ProjectDir)..\x64\$(ConfigurationName)\Native.dll" "$(TargetDir)\"
 </PostBuildEvent>
   </PropertyGroup>
