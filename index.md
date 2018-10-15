@@ -1,0 +1,2 @@
+It's very easy tool for photo selection.
+Select source folder, select target folder and you can watch your photos and store it to target folder very easy. With Ctrl+S shortcut and sound beeps. Good luck.

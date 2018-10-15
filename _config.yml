@@ -1,0 +1,8 @@
+title: Photodarvin
+description: "Simple photo selection app - Select Source Folder - Select Target - And ... "
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-midnight
+
+gems:
+  - jekyll-mentions
