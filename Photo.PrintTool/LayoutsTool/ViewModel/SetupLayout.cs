@@ -29,7 +29,9 @@ namespace Photo.PrintTool.LayoutsTool.ViewModel
             Layouts.AddItem(new Base.Layout { Rows = 2, Columns = 1 });
             Layouts.AddItem(new Base.Layout { Rows = 2, Columns = 2 });
             Layouts.AddItem(new Base.Layout { Rows = 3, Columns = 3 });
+            Layouts.AddItem(new Base.Layout { Rows = 3, Columns = 4 });
             Layouts.AddItem(new Base.Layout { Rows = 4, Columns = 2 });
+            Layouts.AddItem(new Base.Layout { Rows = 4, Columns = 3 });
             Layouts.AddItem(new Base.Layout { Rows = 2, Columns = 4 });
             Layouts.AddItem(new Base.Layout { Rows = 4, Columns = 4 });
 
